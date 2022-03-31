@@ -33,11 +33,11 @@ def post_info(pk):
     return render_template('post.html', post='pk')
 
 
-@main_blueprint.route('/user-feed/<int:id>')
-def user_feed():
+@main_blueprint.route('/user-feed/<int:poster_name>')
+def user_feed(post):
     data = load_json_from_file(DATA_FILE_PATH)
     logging.info("запрошена страничка с пользователем")
-    return render_template('user-feed.html')
+    return render_template('user-feed.html', post='poster_name')
 
 
 @main_blueprint.route('/bookmarks/<int:id>')
