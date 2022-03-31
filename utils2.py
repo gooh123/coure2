@@ -12,7 +12,7 @@ DATA_FILE_PATH = 'static/data/data.json'
 def main_page():
     data = load_json_from_file(DATA_FILE_PATH)
     logging.info("запрошена главная страничка")
-    return render_template('index.html', information="content")
+    return render_template('index.html', information="content", posts=data)
 
 
 @main_blueprint.route('/search')
@@ -26,23 +26,21 @@ def search_page():
         return "поврежден файл с данными"
 
 
-@main_blueprint.route('/post.html')
-def post_info():
+@main_blueprint.route('/post/<int:pk>')
+def post_info(pk):
     data = load_json_from_file(DATA_FILE_PATH)
-    user_name = "poster_name"
-    content = "content"
     logging.info("запрошена страничка с постом")
-    return render_template('post.html', post=content, name=user_name)
+    return render_template('post.html', post='pk')
 
 
-@main_blueprint.route('/user-feed.html')
+@main_blueprint.route('/user-feed/<int:id>')
 def user_feed():
     data = load_json_from_file(DATA_FILE_PATH)
     logging.info("запрошена страничка с пользователем")
     return render_template('user-feed.html')
 
 
-@main_blueprint.route('/bookmarks.html')
+@main_blueprint.route('/bookmarks/<int:id>')
 def bookmarks():
     data = load_json_from_file(DATA_FILE_PATH)
     logging.info("запрошена страничка с bookmarks")
