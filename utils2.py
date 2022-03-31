@@ -34,7 +34,7 @@ def post_info(pk):
 
 
 @main_blueprint.route('/user-feed/<int:poster_name>')
-def user_feed(post):
+def user_feed(poster_name):
     data = load_json_from_file(DATA_FILE_PATH)
     logging.info("запрошена страничка с пользователем")
     return render_template('user-feed.html', post='poster_name')
