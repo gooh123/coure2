@@ -10,7 +10,7 @@ COMMENTS_FILE_PATH = 'static/data/comments.json'
 
 
 def load_json_from_file(file_path):
-    with open(file_path) as file:
+    with open(file_path, encoding='utf8') as file:
         return json.load(file)
 
 
@@ -26,21 +26,20 @@ def get_posts_by_user(user_name):
     posts_found = []
 
     for post in data:
-        if user_name in post['poster_name'].lower():
+        if user_name.lower() in post['poster_name'].lower():
             posts_found.append(post)
-        return posts_found
+    return posts_found
 
 
 def get_comments_by_post_id(post_id):
-    data = load_json_from_file(DATA_FILE_PATH)
+    data = load_json_from_file(COMMENTS_FILE_PATH)
 
-    found_post = None
-    for post in data:
-        if post['pk'] == post_id:
-            found_post = post
-            break
+    result = []
+    for comment in data:
+        if comment['post_id'] == post_id:
+            result.append(comment)
 
-    return found_post
+    return result
 
 
 def search_for_posts(query):
@@ -56,10 +55,12 @@ def search_for_posts(query):
 
 
 def get_post_by_pk(pk):
+    data = load_json_from_file(DATA_FILE_PATH)
 
-    pk = pk.get_posts_all("data.json")
+    found_post = None
+    for post in data:
+        if post['pk'] == pk:
+            found_post = post
+            break
 
-    for post in pk:
-        if pk in post["pk"].lower():
-            post.append(pk)
-    return pk
+    return found_post
