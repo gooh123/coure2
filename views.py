@@ -1,22 +1,23 @@
-from flask import Blueprint, render_template, request
+import utils
+from flask import render_template, Blueprint, request
 import logging
-from utils import load_json_from_file
+from exceptions import DataLayerError
+
+
+views_blueprint = Blueprint('views_blueprint', __name__, template_folder='templates')
+logging.basicConfig(filename='basic.log', level=logging.INFO)
 
 DATA_FILE_PATH = 'static/data/data.json'
-
-views_blueprint = Blueprint('views_blueprint', __name__, template_folder='template')
-logging.basicConfig(filename="basic.log", level=logging.INFO)
+COMMENTS_FILE_PATH = 'static/data/comments.json'
 
 
-@views_blueprint.route('/comments')
-def post_info():
-    data = load_json_from_file(DATA_FILE_PATH)
-    information = []
-    for info in data:
-        if info in data["content"]:
-            information.append(data)
-
-        return information
-    return render_template('post.html')
-
+@views_blueprint.route('/search', methods=['GET'])
+def search_page():
+    s = request.args.get('s', " ")
+    logging.info("Выполняется поиск")
+    try:
+        posts = utils.search_for_posts(s)
+        return render_template('search.html', posts=posts, s=s)
+    except DataLayerError:
+        return "поврежден файл с данными"
 
