@@ -17,17 +17,6 @@ def main_page():
     return render_template('index.html', information="content", posts=data)
 
 
-@main_blueprint.route('/search', methods=['GET'])
-def search_page():
-    s = request.args.get('s', "")
-    logging.info("Выполняется поиск")
-    try:
-        posts = utils.search_for_posts(s)
-        return render_template('search.html', posts=posts, s=s)
-    except DataLayerError:
-        return "поврежден файл с данными"
-
-
 @main_blueprint.route('/post/<int:pk>')
 def post_info(pk):
     post = utils.get_post_by_pk(pk)
