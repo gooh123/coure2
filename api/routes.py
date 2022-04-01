@@ -3,7 +3,7 @@ import utils
 import utils2
 
 
-api_bp = Blueprint('api', __name__)
+api_bp = Blueprint('api', __name__, url_prefix='/api')
 
 
 @api_bp.route('/posts')
@@ -21,4 +21,3 @@ def get_post(post_id):
         return {'error': 'Пост не найден'}, 404
 
     return jsonify(post)
-
