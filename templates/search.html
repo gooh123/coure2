@@ -25,7 +25,7 @@
   </header>
   <main class="container">
     <div class="search">
-      <form action="/" class="search__form">
+      <form action="/search" class="search__form">
         <input type="search" class="search__input">
       </form>
       <p class="search__results">Найдено постов: 11</p>
@@ -42,7 +42,7 @@
           </a>
         </div>
         <a href="{{ url_for('main_blueprint.post_info', pk=post.pk ) }}" class="item__post-link">
-          <img src="static/img/post5.jpg" alt="" width="348" class="item__post-img">
+          <img src="{{ post.pic }}" alt="" width="348" class="item__post-img">
         </a>
         <p class="item__descr"><a href="/tag.html" class="item__tag">#food</a> {{ post.content }}</p>
         <div class="item__post-info">
